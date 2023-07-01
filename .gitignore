@@ -1,0 +1,21 @@
+/.github/
+/.idea/
+/.mvn/
+/ci/
+/CI.adoc
+/CONTRIBUTING.adoc
+/Jenkinsfile
+/LICENSE.txt
+/mvnw
+/mvnw.cmd
+/spring-data-jpa.iml
+/spring-data-commons.iml
+/spring-data-jpa-parent.iml
+/SECURITY.adoc
+/README.adoc
+/spring-data-jpa/Spring Data JPA.sonargraph
+/spring-data-jpa/spring-data-jpa.iml
+/spring-data-jpa/target/
+/spring-data-envers/target/
+/spring-data-envers/spring-data-envers.iml
+/spring-data-jpa-distribution/spring-data-jpa-distribution.iml
