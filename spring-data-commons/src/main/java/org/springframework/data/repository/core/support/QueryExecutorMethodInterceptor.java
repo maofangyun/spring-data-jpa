@@ -136,8 +136,8 @@ class QueryExecutorMethodInterceptor implements MethodInterceptor {
 
 		Method method = invocation.getMethod();
 
-		QueryExecutionConverters.ExecutionAdapter executionAdapter = QueryExecutionConverters //
-				.getExecutionAdapter(method.getReturnType());
+		QueryExecutionConverters.ExecutionAdapter executionAdapter =
+				QueryExecutionConverters.getExecutionAdapter(method.getReturnType());
 
 		if (executionAdapter == null) {
 			return resultHandler.postProcessInvocationResult(doInvoke(invocation), method);

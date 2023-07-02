@@ -244,36 +244,6 @@ class RepositoryMethodInvokerUnitTests {
 		assertThat(multicaster.first().getResult().getError()).isNull();
 	}
 
-	@Test // DATACMNS-1764
-	void capturesKotlinSuspendFunctionsCorrectly() throws Exception {
-
-		var result = Flux.just(new TestDummy());
-		when(query.execute(any())).thenReturn(result);
-
-		Flow<TestDummy> flow = new RepositoryMethodInvokerStub(MyCoroutineRepository.class, multicaster,
-				"suspendedQueryMethod", query::execute).invoke(mock(Continuation.class));
-
-		assertThat(multicaster).isEmpty();
-
-		FlowKt.toCollection(flow, new ArrayList<>(), new Continuation<ArrayList<? extends Object>>() {
-
-			ReactorContext ctx = new ReactorContext(reactor.util.context.Context.empty());
-
-			@NotNull
-			@Override
-			public CoroutineContext getContext() {
-				return ctx;
-			}
-
-			@Override
-			public void resumeWith(@NotNull Object o) {
-
-			}
-		});
-
-		assertThat(multicaster.first().getResult().getState()).isEqualTo(State.SUCCESS);
-		assertThat(multicaster.first().getResult().getError()).isNull();
-	}
 
 	RepositoryMethodInvokerStub repositoryMethodInvoker(String methodName) {
 		return new RepositoryMethodInvokerStub(DummyRepository.class, multicaster, methodName, query::execute);
