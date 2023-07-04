@@ -35,27 +35,26 @@ import java.util.Set;
  * @author Greg Turnquist
  */
 @Entity
-@NamedEntityGraphs({ @NamedEntityGraph(name = "User.overview", attributeNodes = { @NamedAttributeNode("roles") }),
-		@NamedEntityGraph(name = "User.detail",
-				attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode("manager"),
-						@NamedAttributeNode("colleagues") }),
-		@NamedEntityGraph(name = "User.getOneWithDefinedEntityGraphById",
-				attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode("manager"),
-						@NamedAttributeNode("colleagues") }),
-		@NamedEntityGraph(name = "User.withSubGraph",
-				attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode(value = "colleagues",
-						subgraph = "User.colleagues") },
-				subgraphs = { @NamedSubgraph(name = "User.colleagues",
-						attributeNodes = { @NamedAttributeNode("colleagues"), @NamedAttributeNode("roles") }) }),
-		@NamedEntityGraph(name = "User.deepGraph",
-				attributeNodes = { @NamedAttributeNode("roles"),
-						@NamedAttributeNode(value = "colleagues", subgraph = "User.colleagues") },
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "User.overview", attributeNodes = { @NamedAttributeNode("roles") }),
+		@NamedEntityGraph(name = "User.detail", attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode("manager"), @NamedAttributeNode("colleagues") }),
+		@NamedEntityGraph(name = "User.getOneWithDefinedEntityGraphById", attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode("manager"), @NamedAttributeNode("colleagues") }),
+		@NamedEntityGraph(
+				name = "User.withSubGraph",
+				attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode(value = "colleagues", subgraph = "User.colleagues") },
 				subgraphs = {
-						@NamedSubgraph(name = "User.colleagues",
-								attributeNodes = { @NamedAttributeNode("roles"),
-										@NamedAttributeNode(value = "colleagues", subgraph = "User.colleaguesOfColleagues") }),
-						@NamedSubgraph(name = "User.colleaguesOfColleagues",
-								attributeNodes = { @NamedAttributeNode("roles"), }) }) })
+					@NamedSubgraph(name = "User.colleagues", attributeNodes = { @NamedAttributeNode("colleagues"), @NamedAttributeNode("roles") })
+			}
+		),
+		@NamedEntityGraph(
+				name = "User.deepGraph",
+				attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode(value = "colleagues", subgraph = "User.colleagues") },
+				subgraphs = {
+					@NamedSubgraph(name = "User.colleagues", attributeNodes = { @NamedAttributeNode("roles"), @NamedAttributeNode(value = "colleagues", subgraph = "User.colleaguesOfColleagues") }),
+					@NamedSubgraph(name = "User.colleaguesOfColleagues", attributeNodes = { @NamedAttributeNode("roles")})
+			}
+		)
+})
 @NamedQueries({ //
 		@NamedQuery(name = "User.findByEmailAddress", //
 				query = "SELECT u FROM User u WHERE u.emailAddress = ?1"), //
